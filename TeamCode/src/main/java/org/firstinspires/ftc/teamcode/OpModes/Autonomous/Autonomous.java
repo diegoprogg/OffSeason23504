@@ -73,7 +73,7 @@ public class Autonomous extends OpMode {
     private PathChain
             driveStartPoseToShootPose,
             driveShootPoseToCollectionPose,
-            driveCollectionPoseToShootPose,
+            driveCollectionPoseToShootPose,//
 
     driveShootPoseToOpenGatePose,
 
