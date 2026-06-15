@@ -32,17 +32,6 @@ public class Autonomous extends OpMode {
 
         SECOND_LINE_TO_SHOOT,
 
-        OPEN_GATE_TO_POSITION_COLLECTION,
-
-
-        POSITION_COLLECTION_TO_COLLECTION_SECOND_LINE,
-        COLLECTION_SECOND_LINE_TO_SHOOT,
-        SHOOT_TO_POSITION_COLLECTION_THIRD_LINE,
-
-        POSITION_COLLECTION_THIRD_LINE_TO_COLLECTION_THIRD_LINE,
-
-        COLLECTION_THIRD_LINE_TO_SHOOT;
-
 
     }
 
@@ -60,36 +49,22 @@ public class Autonomous extends OpMode {
 
     private final Pose openGatePose = new Pose(126.95260577024516, 73.20922529281542, Math.toRadians(90));
 
-    private final Pose positionCollection = new Pose(70.97040498442367, 58.848130841121495, Math.toRadians(180));
-
     private final Pose collectionSecondLinePose = new Pose(126.25073592056862, 58.32001960439656, Math.toRadians(0));
 
-    private final Pose positionCollectionThirdLinePose = new Pose(58.20383156578464, 35.743653787141625, Math.toRadians(180));
-
-    private final Pose collectionThirdLinePose = new Pose(16.84982280553337, 34.85614598169521, Math.toRadians(180));
 
 
 
     private PathChain
+
             driveStartPoseToShootPose,
             driveShootPoseToCollectionPose,
-            driveCollectionPoseToShootPose,//
+            driveCollectionPoseToShootPose,
 
-    driveShootPoseToOpenGatePose,
+            driveShootPoseToOpenGatePose,
 
-    driveOpenGateToPositionCollection,
+            driveSecondLineToShoot,
 
-    drivePositionCollectionToSecondLinePose,
-
-    driveSecondLineToShoot,
-
-    driveShootPoseToPositionCollectionThirdLine,
-
-    drivePositionCollectionThirdLineToCollectionThirdLine,
-
-    driveCollectionThirdLineToShoot,
-
-    driveOpenGateToSecondLine;
+            driveOpenGateToSecondLine;
 
 
 
@@ -120,37 +95,13 @@ public class Autonomous extends OpMode {
                 .setLinearHeadingInterpolation(openGatePose.getHeading(), collectionSecondLinePose.getHeading())
                 .build();
 
-
-
-        driveOpenGateToPositionCollection = follower.pathBuilder()
-                .addPath(new BezierLine(openGatePose, positionCollection))
-                .setLinearHeadingInterpolation(openGatePose.getHeading(), positionCollection.getHeading())
-                .build();
-
-        drivePositionCollectionToSecondLinePose = follower.pathBuilder()
-                .addPath(new BezierLine(positionCollection, collectionSecondLinePose))
-                .setLinearHeadingInterpolation(positionCollection.getHeading(), collectionSecondLinePose.getHeading())
-                .build();
-
         driveSecondLineToShoot = follower.pathBuilder()
                 .addPath(new BezierLine(collectionSecondLinePose, shootPose))
                 .setLinearHeadingInterpolation(collectionSecondLinePose.getHeading(), shootPose.getHeading())
                 .build();
 
-        driveShootPoseToPositionCollectionThirdLine = follower.pathBuilder()
-                .addPath(new BezierLine(shootPose, positionCollectionThirdLinePose))
-                .setLinearHeadingInterpolation(shootPose.getHeading(), positionCollectionThirdLinePose.getHeading())
-                .build();
 
-        drivePositionCollectionThirdLineToCollectionThirdLine = follower.pathBuilder()
-                .addPath(new BezierLine(positionCollectionThirdLinePose, collectionThirdLinePose))
-                .setLinearHeadingInterpolation(positionCollectionThirdLinePose.getHeading(), collectionThirdLinePose.getHeading())
-                .build();
 
-        driveCollectionThirdLineToShoot = follower.pathBuilder()
-                .addPath(new BezierLine(collectionThirdLinePose, shootPose))
-                .setLinearHeadingInterpolation(collectionThirdLinePose.getHeading(), shootPose.getHeading())
-                .build();
     }
 
 
@@ -196,44 +147,7 @@ public class Autonomous extends OpMode {
                     setPathState(PathState.SECOND_LINE_TO_SHOOT);
                 }
                 break;
-
-
-
-//            case OPEN_GATE_TO_POSITION_COLLECTION:
-//                if (!follower.isBusy()){
-//                    follower.followPath(drivePositionCollectionToSecondLinePose, true);
-//                    setPathState(PathState.POSITION_COLLECTION_TO_COLLECTION_SECOND_LINE);
-//                }
-//                break;
-//            case POSITION_COLLECTION_TO_COLLECTION_SECOND_LINE:
-//                if (!follower.isBusy()){
-//                    follower.followPath(driveSecondLineToShoot, true);
-//                    setPathState(PathState.COLLECTION_SECOND_LINE_TO_SHOOT);
-//                }
-//                break;
-//
-//            case COLLECTION_SECOND_LINE_TO_SHOOT:
-//                if (!follower.isBusy()){
-//                    follower.followPath(driveShootPoseToPositionCollectionThirdLine);
-//                    setPathState(PathState.SHOOT_TO_POSITION_COLLECTION_THIRD_LINE);
-//                }
-//                break;
-//            case SHOOT_TO_POSITION_COLLECTION_THIRD_LINE:
-//                if (!follower.isBusy()){
-//                    follower.followPath(drivePositionCollectionThirdLineToCollectionThirdLine);
-//                    setPathState(PathState.POSITION_COLLECTION_THIRD_LINE_TO_COLLECTION_THIRD_LINE);
-//                }
-//                break;
-//
-//            case POSITION_COLLECTION_THIRD_LINE_TO_COLLECTION_THIRD_LINE:
-//                if (!follower.isBusy()){
-//                    follower.followPath(driveCollectionThirdLineToShoot);
-//                    setPathState(PathState.COLLECTION_THIRD_LINE_TO_SHOOT);
-//                }
-//                break;
-//            default:
-//                telemetry.addLine("Sem comandos para caminho");
-//                break;
+                
         }
     }
 
